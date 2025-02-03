@@ -1,4 +1,3 @@
-// src/InputSequence.js
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -22,27 +21,25 @@ const InputSequence = () => {
   };
 
   return (
-    <div>
+    <div className="input-sequence-container">
       <h1>mtDNA Ethnicity Prediction</h1>
       <form onSubmit={handleSubmit}>
         <label>
           HVR1 Sequence:
-          <input
-            type="text"
+          <textarea
+            rows={4} // Set the number of rows
             value={hvr1}
             onChange={(e) => setHvr1(e.target.value)}
           />
         </label>
-        <br />
         <label>
           HVR2 Sequence:
-          <input
-            type="text"
+          <textarea
+            rows={4} // Set the number of rows
             value={hvr2}
             onChange={(e) => setHvr2(e.target.value)}
           />
         </label>
-        <br />
         <button type="submit">Predict</button>
       </form>
       {ethnicity && <h2>Predicted Ethnicity: {ethnicity}</h2>}
