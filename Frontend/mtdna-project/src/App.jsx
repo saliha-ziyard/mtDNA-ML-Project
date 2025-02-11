@@ -5,6 +5,8 @@ import "./App.scss";
 import Home from './views/Home';
 import InputSequence from './views/InputSequence';
 import Navigation from './views/subComponents/Navigation';
+import ToolComponent from "./views/subComponents/ToolComponent";
+import Footer from './views/subComponents/Footer';
 // import Applications from './views/Applications';
 // import MitochondrialDNA from './views/MitochondrialDNA';
 // import AboutUs from './views/AboutUs';
@@ -22,8 +24,11 @@ const App = () => {
           <Route path="/mitochondrial-dna" element={<MitochondrialDNA />} />
           <Route path="/about-us" element={<AboutUs />} /> */}
           <Route path="/input-sequence" element={<InputSequence />} />
+          <Route path="/tool" element={<ToolComponent />} />
           {/* <Route path="/login" element={<Login />} /> */}
         </Routes>
+
+        <Footer />
       </div>
     </Router>
   );

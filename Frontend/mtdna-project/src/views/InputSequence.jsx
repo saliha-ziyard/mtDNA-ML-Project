@@ -1,49 +1,59 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from "react";
+import { useNavigate } from "react-router-dom"; // For navigation
+import { FaArrowRight } from "react-icons/fa"; // React Icons
+import HeaderComponent from './subComponents/HeaderComponent';
+import bannerImg from '../assets/bannerImg.png'
 
 const InputSequence = () => {
-  const [hvr1, setHvr1] = useState('');
-  const [hvr2, setHvr2] = useState('');
-  const [ethnicity, setEthnicity] = useState('');
+  const navigate = useNavigate(); // Hook for navigation
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://127.0.0.1:5000/predict', {
-        hvr1,
-        hvr2,
-      });
-      setEthnicity(response.data.ethnicity);
-    } catch (error) {
-      console.error('Error making API request:', error);
-      setEthnicity('Error');
-    }
+  const handleGetStarted = () => {
+    navigate("/tool"); // Redirect to the tool component
   };
 
   return (
-    <div className="input-sequence-container">
-      <h1>mtDNA Ethnicity Prediction</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          HVR1 Sequence:
-          <textarea
-            rows={4} // Set the number of rows
-            value={hvr1}
-            onChange={(e) => setHvr1(e.target.value)}
-          />
-        </label>
-        <label>
-          HVR2 Sequence:
-          <textarea
-            rows={4} // Set the number of rows
-            value={hvr2}
-            onChange={(e) => setHvr2(e.target.value)}
-          />
-        </label>
-        <button type="submit">Predict</button>
-      </form>
-      {ethnicity && <h2>Predicted Ethnicity: {ethnicity}</h2>}
+    <>
+    <HeaderComponent image={bannerImg} text={"mtDNA Ethnicity Prediction"} />
+    <div className="input-sequence">
+      <h2>Welcome to the mtDNA Ethnicity Prediction Tool</h2>
+      <p>
+        Discover your ancestral origins using mitochondrial DNA (mtDNA) sequences. 
+        Our advanced machine learning model analyzes Hypervariable Regions (HVR1 and HVR2) 
+        to predict your ethnicity and provide insights into your genetic heritage.
+      </p>
+
+      <div className="key-features">
+        <h3>Key Features:</h3>
+        <ul>
+          <li>Predict ethnicity based on mtDNA sequences.</li>
+          <li>Supports manual input or FASTA file upload.</li>
+          <li>Provides detailed haplogroup information.</li>
+          <li>User-friendly and interactive interface.</li>
+        </ul>
+
+        <ul>
+            <li>
+              <strong>Step 1:</strong> Choose between manual input or uploading a FASTA file.
+            </li>
+            <li>
+              <strong>Step 2:</strong> Submit your HVR1 and HVR2 sequences.
+              <span className="tooltip">
+              </span>
+            </li>
+            <li>
+              <strong>Step 3:</strong> Get an ethnicity prediction with additional haplogroup information.
+            </li>
+          </ul>
+      </div> <br/>
+      <button className="start-button" onClick={handleGetStarted}>
+        Get Started <FaArrowRight className="arrow-icon" />
+      </button>
+
+     
     </div>
+
+    
+    </>
   );
 };
 
