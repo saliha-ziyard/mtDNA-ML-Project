@@ -1,14 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // For navigation
-import { FaArrowRight } from "react-icons/fa"; // React Icons
+import { useNavigate } from "react-router-dom"; 
+import { FaArrowRight } from "react-icons/fa"; 
 import HeaderComponent from './subComponents/HeaderComponent';
 import bannerImg from '../assets/bannerImg.png'
 
 const InputSequence = () => {
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate(); 
 
   const handleGetStarted = () => {
-    navigate("/tool"); // Redirect to the tool component
+    navigate("/tool"); 
   };
 
   return (

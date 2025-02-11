@@ -56,9 +56,9 @@ const ToolComponent = () => {
 
   return (
     <>
-      <p className="tool-description">
+      <h2 className="tool-description">
         Enter your HVR1 and HVR2 sequences or upload a FASTA file to get started.
-      </p>
+      </h2>
     <div className="tool-container">
       <div className="input-section">
         <button
@@ -70,6 +70,7 @@ const ToolComponent = () => {
 
         {useFileUpload ? (
           <div className="file-upload-section">
+            <h3> Upload the FASTA below</h3>
             <input
               type="file"
               accept=".fasta"
