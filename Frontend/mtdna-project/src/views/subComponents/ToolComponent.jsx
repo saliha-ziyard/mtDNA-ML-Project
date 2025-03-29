@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { FaQuestionCircle, FaHistory, FaSpinner, FaExclamationCircle } from "react-icons/fa"; // React Icons
+import { FaQuestionCircle, FaHistory, FaSpinner, FaExclamationCircle } from "react-icons/fa";
 
 const ToolComponent = () => {
   const [hvr1, setHvr1] = useState("");
@@ -12,8 +12,37 @@ const ToolComponent = () => {
   const [file, setFile] = useState(null);
   const [predictionHistory, setPredictionHistory] = useState([]);
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const hvr1_start = 16024, hvr1_end = 16365;
+  const hvr2_start = 73, hvr2_end = 340;
+
+  const handleFileChange = async (e) => {
+    const uploadedFile = e.target.files[0];
+    setFile(uploadedFile);
+    setError("");
+
+    if (uploadedFile) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const text = event.target.result;
+        const lines = text.split("\n");
+        let sequence = "";
+
+        for (let i = 1; i < lines.length; i++) {
+          if (lines[i].startsWith(">")) break; // Stop if another sequence starts
+          sequence += lines[i].trim();
+        }
+
+        if (sequence.length < 16400) {
+          setError("Error: Only full mitochondrial genomes are accepted (≥16400 bases).");
+          setFile(null);
+          return;
+        }
+
+        setHvr1(sequence.slice(hvr1_start - 1, hvr1_end));
+        setHvr2(sequence.slice(hvr2_start - 1, hvr2_end));
+      };
+      reader.readAsText(uploadedFile);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -22,20 +51,8 @@ const ToolComponent = () => {
     setError("");
 
     try {
-      let requestData;
-
-      if (useFileUpload && file) {
-        const formData = new FormData();
-        formData.append("file", file);
-        requestData = formData;
-      } else {
-        requestData = { hvr1, hvr2 };
-      }
-
-      const response = await axios.post("http://127.0.0.1:5000/predict", requestData, {
-        headers: useFileUpload ? { "Content-Type": "multipart/form-data" } : {},
-      });
-
+      const requestData = { hvr1, hvr2 };
+      const response = await axios.post("http://127.0.0.1:5000/predict", requestData);
       setEthnicity(response.data.ethnicity);
       setPredictionHistory([...predictionHistory, response.data.ethnicity]);
     } catch (error) {
@@ -55,9 +72,7 @@ const ToolComponent = () => {
 
   return (
     <>
-      <h2 className="tool-description">
-        Enter your HVR1 and HVR2 sequences or upload a FASTA file to get started.
-      </h2>
+      <h2 className="tool-description">Enter your HVR1 and HVR2 sequences or upload a FASTA file.</h2>
       <div className="tool-container">
         <div className="input-section">
           <button className="mode-toggle-button" onClick={() => setUseFileUpload(!useFileUpload)}>
@@ -139,10 +154,8 @@ const ToolComponent = () => {
         </div>
 
         {predictionHistory.length > 0 && (
-          <div className="prediction-history">
-            <h3>
-              <FaHistory className="history-icon" /> Prediction History
-            </h3>
+          <div>
+            <h3>Prediction History</h3>
             <ul>
               {predictionHistory.map((prediction, index) => (
                 <li key={index}>{prediction}</li>
