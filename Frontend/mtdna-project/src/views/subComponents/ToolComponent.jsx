@@ -57,39 +57,69 @@ const ToolComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(""); // Reset error message
-
-    // Validate required sequences based on input type
-    if (inputType === "hvr1" && !hvr1) {
-      setError("Error: HVR1 sequence is required.");
-      setLoading(false);
-      return;
+    setError("");
+  
+    let sequence = "";
+    let modelType = "";  // We'll set the model type here
+  
+    if (inputType === "hvr1") {
+      if (!hvr1) {
+        setError("Error: HVR1 sequence is required.");
+        setLoading(false);
+        return;
+      }
+      sequence = hvr1;
+      modelType = "hvr1_ethnicity_model_files"; // The folder name for HVR1 model
+    } else if (inputType === "hvr2") {
+      if (!hvr2) {
+        setError("Error: HVR2 sequence is required.");
+        setLoading(false);
+        return;
+      }
+      sequence = hvr2;
+      modelType = "hvr2_ethnicity"; // The folder name for HVR2 model
+    } else {
+      if (!hvr1 || !hvr2) {
+        setError("Error: Both HVR1 and HVR2 sequences are required.");
+        setLoading(false);
+        return;
+      }
+      sequence = hvr1 + hvr2; // Combine for the backend
+      modelType = "combined_ethnicity"; // The folder name for Combined model
     }
-
-    if (inputType === "hvr2" && !hvr2) {
-      setError("Error: HVR2 sequence is required.");
-      setLoading(false);
-      return;
-    }
-
-    if (inputType === "combined" && (!hvr1 || !hvr2)) {
-      setError("Error: Both HVR1 and HVR2 sequences are required.");
-      setLoading(false);
-      return;
-    }
-
+  
     try {
-      const requestData = { hvr1, hvr2 };
-      const response = await axios.post("http://127.0.0.1:5000/predict", requestData);
-      setEthnicity(response.data.ethnicity);
-      setPredictionHistory([...predictionHistory, response.data.ethnicity]);
+      // Add some console debugging to see what's being sent
+      console.log("Sending data:", { sequence, model_type: modelType });
+      
+      const response = await axios.post("http://127.0.0.1:5000/predict_ml_model_only", 
+        { sequence, model_type: modelType }
+      );
+      
+      console.log("Response received:", response.data);
+      
+      // Update the ethnicity state with the prediction from the response
+      setEthnicity(response.data.prediction);
+      setPredictionHistory([...predictionHistory, response.data.prediction]);
     } catch (error) {
-      setError("Error: Unable to process the request. Please try again.");
+      console.error("API Error:", error);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Error data:", error.response.data);
+        setError(`Error: ${error.response.data.error || "Unable to process the request"}`);
+      } else if (error.request) {
+        // The request was made but no response was received
+        setError("Error: No response from server. Is the backend running?");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        setError(`Error: ${error.message}`);
+      }
     } finally {
       setLoading(false);
     }
   };
-
+  
   const resetForm = () => {
     setHvr1("");
     setHvr2("");
