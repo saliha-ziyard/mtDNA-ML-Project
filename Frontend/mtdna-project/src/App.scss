@@ -12,12 +12,17 @@ $CardBackgroundColour : #999ea1;
 $PrimaryFontSize: 35px;
 $SecondaryFontSize: 18px;
 :root {
-  --primary-color: #007bff;
-  --secondary-color: #6c757d;
+  --primary-color: #296F9D;
+  --secondary-color: #71777c;
+  --third-color: #666;
+  --card-background: #999ea1;
   --background-color: #ffffff;
-  --text-color: #333333;
   --border-color: #dddddd;
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --padding-left-desktop: 7%;
+  --heading-padding-top: 30px;
+  --primary-font-size: 35px;
+  --secondary-font-size: 18px;
 
 }
 
@@ -649,6 +654,298 @@ body {
   }
 }
 
+/*mtdna view=========================================================*/
+
+.mtdna-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-left: var(--padding-left-desktop);
+  background: var(--background-color);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  .mtdna-header {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    padding-top: var(--heading-padding-top);
+    border-bottom: 1px solid var(--border-color);
+
+    .mtdna-title {
+      font-family: 'Lora', serif;
+      font-size: var(--primary-font-size);
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .mtdna-visual-element {
+      position: absolute;
+      top: -10px;
+      left: -20px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #4a8cb8 100%);
+      opacity: 0.1;
+      z-index: 0;
+    }
+    
+  }
+
+  .mtdna-introduction {
+    font-size: var(--secondary-font-size);
+    line-height: 1.8;
+    color: var(--secondary-color);
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background-color: rgba(41, 111, 157, 0.05);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .mtdna-section {
+    margin-bottom: 3rem;
+
+    .mtdna-section-title {
+      font-family: 'Lora', serif;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+      position: relative;
+      padding-bottom: 0.5rem;
+      padding-top: var(--heading-padding-top);
+    }
+    .mtdna-section-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--primary-color);
+    }
+
+    .mtdna-list {
+      list-style-type: none;
+    
+      .mtdna-list-item {
+        margin-bottom: 1rem;
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        border-left: 3px solid transparent;
+        color: var(--third-color);
+    
+        .mtdna-highlight {
+          font-weight: 600;
+          color: var(--primary-color);
+        }
+      }
+      .mtdna-list-item:hover {
+        background-color: rgba(41, 111, 157, 0.05);
+        border-left: 3px solid var(--primary-color);
+        transform: translateX(5px);
+      }
+      
+    }
+  }
+  
+}
+
+
+.mtdna-structure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .mtdna-image-container {
+    margin: 1.5rem 0;
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+    .mtdna-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: all 0.3s ease;
+
+      .mtdna-image:hover {
+        transform: scale(1.02);
+      }
+      
+      .mtdna-image-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(41, 111, 157, 0.7);
+        color: white;
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        text-align: center;
+      }
+      
+    }
+  }
+}
+
+
+
+.mtdna-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+
+  .mtdna-card {
+    background: var(--card-background);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow), 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    color: white;
+
+    h3 {
+      font-family: 'Lora', serif;
+      margin: 1rem 0;
+      color: white;
+    }
+    p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.95rem;
+    }
+    .mtdna-card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    
+    .mtdna-card-icon::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.2;
+    }
+    
+    .mtdna-card-icon.genetics {
+      color: #296F9D;
+    }
+    
+    .mtdna-card-icon.anthropology {
+      color: #71777c;
+    }
+    
+    .mtdna-card-icon.medicine {
+      color: #dddddd;
+    }
+  }
+  .mtdna-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.08);
+  }
+  
+  .mtdna-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: var(--primary-color);
+    z-index: -1;
+  }
+  
+}
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .mtdna-container {
+    padding: 1.5rem;
+  }
+  
+  .mtdna-title {
+    font-size: 2rem;
+  }
+  
+  .mtdna-introduction {
+    font-size: 1.1rem;
+    padding: 1rem;
+  }
+  
+  .mtdna-card-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dark Mode Support - Can be toggled with JavaScript */
+.dark-mode {
+  color: #ecf0f1;
+  background-color: #1a2530;
+}
+
+.dark-mode .mtdna-container {
+  background: #2c3e50;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.dark-mode .mtdna-card {
+  background: #34495e;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Print styles */
+@media print {
+  .mtdna-container {
+    box-shadow: none;
+    max-width: 100%;
+  }
+  
+  .mtdna-card-container {
+    display: block;
+  }
+  
+  .mtdna-card {
+    page-break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.mtdna-title:hover + .mtdna-visual-element {
+  animation: pulse 2s infinite;
+}
 /* Footer */
 .footer {
   background-color: $PrimaryFontColour;
