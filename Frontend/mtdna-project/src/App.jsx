@@ -10,13 +10,12 @@ import Footer from './views/subComponents/Footer';
 import MitochondrialDNA from './views/subComponents/MitochondrialDNA';
 // import Applications from './views/Applications';
 import AboutUs from './views/subComponents/AboutUs';
-// import Login from './views/Login';
+import Login from './views/subComponents/Login';
 
 const App = () => {
   return (
     <Router>
       <div>
-        <Navigation />
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -25,7 +24,7 @@ const App = () => {
           <Route path="/about-us" element={<AboutUs />} /> 
           <Route path="/input-sequence" element={<InputSequence />} />
           <Route path="/tool" element={<ToolComponent />} />
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/login" element={<Login />} />
         </Routes>
 
         <Footer />
