@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaSpinner, FaExclamationCircle, FaHistory } from "react-icons/fa";
 import { jsPDF } from "jspdf";
-
+import Navigation from "./Navigation";
 const ToolComponent = () => {
   const [inputType, setInputType] = useState("combined"); // Track input type
   const [hvr1, setHvr1] = useState("");
@@ -192,7 +192,8 @@ const ToolComponent = () => {
 
   return (
     <>
-    
+      <Navigation />
+
       <h2 className="tool-description">Select your input type and provide the corresponding sequence(s)</h2>
       <div className="input-type-selection">
             <label>

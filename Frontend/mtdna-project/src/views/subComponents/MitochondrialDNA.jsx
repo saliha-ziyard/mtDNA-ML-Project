@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import bannerImg from "../../assets/bannerImg.png";
 import HeaderComponent from "./HeaderComponent";
-
+import Navigation from "./Navigation";
 
 const MitochondrialDNA = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -19,6 +19,8 @@ const MitochondrialDNA = () => {
 
   return (
     <>
+    <Navigation />
+
     <HeaderComponent image={bannerImg} text={"Mitochondrial DNA (mtDNA)"} />
       {/* Add dark mode toggle button */}
       <button onClick={toggleDarkMode} className="mode-toggle">

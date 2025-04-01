@@ -4,7 +4,7 @@ import { FaArrowRight } from "react-icons/fa";
 import HeaderComponent from "./subComponents/HeaderComponent";
 import bannerImg from "../assets/bannerImg.png";
 import { FaRegCircle, FaRegCheckCircle, FaRegDotCircle } from "react-icons/fa";
-
+import Navigation from "./subComponents/Navigation";
 const InputSequence = () => {
   const navigate = useNavigate();
 
@@ -14,6 +14,8 @@ const InputSequence = () => {
 
   return (
     <>
+      <Navigation />
+
       <HeaderComponent image={bannerImg} text={"mtDNA Ethnicity Prediction"} />
       <div className="input-sequence">
         <h2>Welcome to the mtDNA Ethnicity Prediction Tool</h2>

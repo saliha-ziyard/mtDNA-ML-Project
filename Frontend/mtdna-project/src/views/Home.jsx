@@ -3,10 +3,13 @@ import bannerImg from "../assets/bannerImg.png";
 import HowItWorksCard from "./cards/HowItWorksCard";
 import WhyUseCard from "./cards/WhyUseCard";
 import Footer from "./subComponents/Footer";
+import Navigation from "./subComponents/Navigation";
 
 function Home() {
   return (
     <>
+    <Navigation />
+
       <div className="hero-component">
         <img src={bannerImg} />
         <div className="hero-text-container">

@@ -1,12 +1,14 @@
 import React from 'react';
 import bannerImg from "../../assets/bannerImg.png";
 import HeaderComponent from "./HeaderComponent";
-
+import Navigation from './Navigation';
 
 
 const AboutUs = () => {
   return (
     <>
+    <Navigation />
+
     <HeaderComponent image={bannerImg} text={"About Our mtDNA Project"} />
 
     <div className="about-us-container">
