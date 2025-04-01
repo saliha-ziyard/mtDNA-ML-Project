@@ -89,37 +89,20 @@ const ToolComponent = () => {
     }
   
     try {
-      // Add some console debugging to see what's being sent
-      console.log("Sending data:", { sequence, model_type: modelType });
-      
-      const response = await axios.post("http://127.0.0.1:5000/predict_ml_model_only", 
-        { sequence, model_type: modelType }
-      );
-      
-      console.log("Response received:", response.data);
-      
-      // Update the ethnicity state with the prediction from the response
+      const requestData = { sequence, model_type: modelType }; // Send model_type in the request
+      const response = await axios.post("http://127.0.0.1:5000/predict_ml_model_only", requestData);
+  
       setEthnicity(response.data.prediction);
       setPredictionHistory([...predictionHistory, response.data.prediction]);
     } catch (error) {
-      console.error("API Error:", error);
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error("Error data:", error.response.data);
-        setError(`Error: ${error.response.data.error || "Unable to process the request"}`);
-      } else if (error.request) {
-        // The request was made but no response was received
-        setError("Error: No response from server. Is the backend running?");
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        setError(`Error: ${error.message}`);
-      }
+      setError("Error: Unable to process the request. Please try again.");
     } finally {
       setLoading(false);
     }
   };
   
+  
+
   const resetForm = () => {
     setHvr1("");
     setHvr2("");
@@ -209,16 +192,9 @@ const ToolComponent = () => {
 
   return (
     <>
+    
       <h2 className="tool-description">Select your input type and provide the corresponding sequence(s)</h2>
-      <div className="tool-container">
-        <div className="input-section">
-          <button
-            className="mode-toggle-button"
-            onClick={() => setUseFileUpload(!useFileUpload)}
-          >
-            {useFileUpload ? "Switch to Manual Input" : "Switch to File Upload"}
-          </button>
-          <div className="input-type-selection">
+      <div className="input-type-selection">
             <label>
               <input
                 type="radio"
@@ -246,7 +222,16 @@ const ToolComponent = () => {
               />
               Combined (HVR1 & HVR2)
             </label>
-          </div>
+      </div>
+      <div className="tool-container">
+        <div className="input-section">
+          <button
+            className="mode-toggle-button"
+            onClick={() => setUseFileUpload(!useFileUpload)}
+          >
+            {useFileUpload ? "Switch to Manual Input" : "Switch to File Upload"}
+          </button>
+          
           {useFileUpload ? (
             <div className="file-upload-section">
               <input
@@ -271,7 +256,7 @@ const ToolComponent = () => {
                   value={hvr1}
                   onChange={(e) => setHvr1(e.target.value)}
                   placeholder="Enter HVR1 sequence..."
-                  className="sequence-input"
+                  className="input-label"
                 />
               )}
               {inputType !== "hvr1" && (
@@ -279,7 +264,7 @@ const ToolComponent = () => {
                   value={hvr2}
                   onChange={(e) => setHvr2(e.target.value)}
                   placeholder="Enter HVR2 sequence..."
-                  className="sequence-input"
+                  className="input-label"
                 />
               )}
               <button
