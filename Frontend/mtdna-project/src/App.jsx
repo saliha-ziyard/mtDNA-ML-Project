@@ -9,7 +9,7 @@ import ToolComponent from "./views/subComponents/ToolComponent";
 import Footer from './views/subComponents/Footer';
 import MitochondrialDNA from './views/subComponents/MitochondrialDNA';
 // import Applications from './views/Applications';
-// import AboutUs from './views/AboutUs';
+import AboutUs from './views/subComponents/AboutUs';
 // import Login from './views/Login';
 
 const App = () => {
@@ -22,7 +22,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           {/* <Route path="/applications" element={<Applications />} /> */}
           <Route path="/mitochondrial-dna" element={<MitochondrialDNA />} />
-          {/* <Route path="/about-us" element={<AboutUs />} />  */}
+          <Route path="/about-us" element={<AboutUs />} /> 
           <Route path="/input-sequence" element={<InputSequence />} />
           <Route path="/tool" element={<ToolComponent />} />
           {/* <Route path="/login" element={<Login />} /> */}
