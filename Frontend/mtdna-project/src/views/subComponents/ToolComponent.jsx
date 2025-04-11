@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../../cssStyles/toolComponentCss.scss'
 import axios from "axios";
 import { FaSpinner, FaExclamationCircle, FaHistory } from "react-icons/fa";
 import { jsPDF } from "jspdf";
