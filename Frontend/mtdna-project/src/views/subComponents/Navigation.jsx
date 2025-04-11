@@ -40,7 +40,7 @@ function Navigation() {
         <Link to="/input-sequence" onClick={() => setIsOpen(false)}>Applications</Link>
         <Link to="/mitochondrial-dna" onClick={() => setIsOpen(false)}>Mitochondrial DNA</Link>
         <Link to="/about-us" onClick={() => setIsOpen(false)}>About Us</Link>
-        <Link to="/login" onClick={() => setIsOpen(false)}>Login</Link>
+        {/* <Link to="/login" onClick={() => setIsOpen(false)}>Login</Link> */}
       </div>
     </div>
   );

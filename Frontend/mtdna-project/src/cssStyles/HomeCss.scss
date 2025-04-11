@@ -1,0 +1,326 @@
+@import './variables.scss';
+
+// Hero Component
+.hero-component {
+  width: 100%;
+  height: 100dvh;
+  position: relative;
+  margin-bottom: 0; /* Ensure no bottom margin */
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; /* Prevents image spacing issues */
+  }
+
+  .hero-text-container {
+    padding-left: $paddingLeftDesktop;
+    position: absolute;
+    top: 30%;
+    z-index: 4;
+    max-width: 800px;
+
+    h1 {
+      font-size: 50px;
+      text-align: left;
+      color: $PrimaryFontColour;
+      font-weight: 700;
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    h2 {
+      font-size: 20px;
+      color: $SecondaryFontColour;
+      font-weight: 400;
+      text-align: left;
+      margin: 0;
+    }
+
+    hr {
+      margin: 10px 0 10px 0;
+      width: 90%;
+    }
+  }
+}
+
+// How It Works Component
+.how-it-works-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  // margin-top: 0; /* Remove any top margin */
+
+  h2 {
+    font-size: $PrimaryFontSize;
+    color: $PrimaryFontColour; 
+    margin-bottom: 20px;
+    font-weight: 600;
+    padding-top: $HeadingPaddingTop;
+  }
+
+  .how-it-works-cards {
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: $CardBackgroundColour;
+    gap: 15px;
+
+    .how-it-works-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 180px);
+
+        h3 {
+          font-size: 18px;
+          margin-bottom: 10px;
+          margin-top: 0;
+          color: $PrimaryFontColour;
+          font-weight: 400;
+          min-height: 50px;
+        }
+
+        .description-box {
+          display: flex;
+          flex: 1;
+
+          p {
+            font-size: 15px;
+            color: $ThirdFontColour;
+            margin-bottom: 20px;
+          }
+        }
+      }
+      
+      &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+// Why Use Component
+.why-use-component {
+  background-color: #fff; 
+  padding: 20px;
+  text-align: center;
+
+  h2 {
+    font-size: $PrimaryFontSize;
+    color: $PrimaryFontColour; 
+    margin-bottom: 0;
+    font-weight: 600;
+    padding-top: $HeadingPaddingTop;
+  }
+
+  .content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-bottom: $HeadingPaddingTop;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    .subtitle {
+      font-size: 17px;
+      color: $SecondaryFontColour; 
+      margin-bottom: 30px;
+    }
+
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+
+      .why-use-card {
+        text-align: left;
+        padding: 20px;
+        border-left: 6px solid $CardBackgroundColour; 
+        background-color: #f9f9f9; 
+        border-radius: 5px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+
+        h3 {
+          font-size: 20px;
+          color: $PrimaryFontColour; 
+          margin-bottom: 10px;
+        }
+
+        p {
+          font-size: 15px;
+          color: $SecondaryFontColour;
+        }
+        
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+}
+
+// Fix for horizontal overflow and hidden gaps
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// Fix for component gaps
+.hero-component + .how-it-works-component {
+  margin-top: 0;
+}
+
+// Media Queries - Consolidated and organized by breakpoint
+@media (max-width: 992px) and (min-width: 769px) {
+  // Tablet styles
+  .how-it-works-component {
+    .how-it-works-cards {
+      flex-wrap: wrap;
+      justify-content: center;
+      
+      .how-it-works-card {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  // Mobile styles for hero
+  .hero-component {
+    height: fit-content;
+    
+    img {
+      height: 50dvh; 
+    }
+
+    .hero-text-container {
+      padding-left: 20px;
+      top: 32%;
+      max-width: 300px;
+  
+      h1 {
+        font-size: 24px;
+      }
+  
+      h2 {
+        font-size: 16px;
+        width: 220px;
+      }
+    }
+  }
+
+  // Mobile styles for how-it-works
+  .how-it-works-component {
+    h2 {
+      font-size: 20px;
+
+    }
+    
+    .how-it-works-cards {
+      flex-direction: column;
+      padding: 15px;
+      max-width: 230px;
+      gap:0;
+      
+      .how-it-works-card {
+        max-width: 100%;
+        margin-bottom: 15px;
+        max-width: 230px;
+        height: fit-content;
+
+        img{
+          height: 80px;
+        }
+        
+        .content {
+          h3 {
+            min-height: auto;
+            font-size: 16px;
+            margin-bottom: 0;
+          }
+
+          .description-box{
+            p{
+              font-size: 12px;
+              margin-bottom: 0;
+            }
+          }
+        }
+        
+        
+        &:hover {
+          transform: translateY(-5px);
+        }
+      }
+    }
+  }
+
+  // Mobile styles for why-use
+  .why-use-component {
+    h2 {
+      font-size: 20px;
+      // padding-top: 40px;
+    }
+    
+    .content {
+      padding-bottom: 40px;
+      
+      .subtitle {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+      
+      .features {
+        gap: 20px;
+
+        .why-use-card {
+            h3 {
+              font-size: 16px;
+            }
+            
+            p {
+              font-size: 14px;
+            }
+          
+        }
+
+     }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  // Small mobile styles
+
+  
+}

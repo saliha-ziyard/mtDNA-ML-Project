@@ -4,6 +4,7 @@ import HowItWorksCard from "./cards/HowItWorksCard";
 import WhyUseCard from "./cards/WhyUseCard";
 import Footer from "./subComponents/Footer";
 import Navigation from "./subComponents/Navigation";
+import '../cssStyles/HomeCss.scss'
 
 function Home() {
   return (

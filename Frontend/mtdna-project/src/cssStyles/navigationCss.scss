@@ -10,11 +10,11 @@
   position: absolute;
   z-index: 6;
   width: 100%;
-  max-width: 1200px;
+  max-width: 900px;
   padding: 0 20px;
 
   h1 {
-    margin-left: 0;
+    margin-left: 50px;
     font-size: 25px;
     color: $PrimaryFontColour;
   }
@@ -47,17 +47,21 @@
 // Responsive styles
 @media screen and (max-width: 768px) {
   .navigation-container {
-    padding: 0 15px;
+    width: 340px;
+
+    h1{
+      margin-left: 10px;
+    }
 
     .nav-links {
       position: fixed;
       top: 0;
       right: -100%;
-      width: 70%;
+      width: 50%;
       max-height: 80vh;
       overflow-y: auto;
       flex-direction: column;
-      background-color: white;
+      background-color: rgb(208, 207, 207);
       box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
       transition: right 0.3s ease;
       padding: 80px 20px 20px;
@@ -67,7 +71,7 @@
         margin: 15px 0;
         font-size: 20px;
         width: 100%;
-        padding: 10px 0;
+        padding: 5px 0;
       }
     }
 
