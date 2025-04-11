@@ -1,5 +1,6 @@
 // HeaderComponent.js
 import React from 'react';
+import '../../cssStyles/headerComponentCss.scss'
 
 function HeaderComponent({ image, text ,subText}) {
   return (

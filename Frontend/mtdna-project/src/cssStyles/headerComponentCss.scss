@@ -1,0 +1,60 @@
+
+@import './variables.scss';
+
+.header-component {
+    position: relative;
+    height: 45dvh;
+  
+    .header-overlay {
+      background: linear-gradient(to right, rgba(229, 224, 224, 0.6), rgba(0, 0, 0, 0.4));
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+  
+    .header-image {
+      width: 100%;
+      position: relative;
+      object-fit: cover;
+      height: 100%;
+    }
+  
+    .header-text {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      text-align: center;
+      transform: translate(-50%, -50%);
+  
+      h1 {
+        color: $PrimaryFontColour;
+        font-size: 40px;
+        font-weight: 800;
+        text-align: center;
+        margin: 0;
+      }
+  
+      h2 {
+        color: #fff;
+        font-size: 25px;
+        font-weight: 800;
+        text-align: center;
+        margin: 0;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .header-component{
+    .header-text{
+        width: 80%;
+        h1 {
+            font-size: 28px;
+            background-color: #fff;
+            border-radius: 20px;
+          }
+    }
+    }
+  }
