@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import '../../cssStyles/toolComponentCss.scss'
 import axios from "axios";
 import { FaSpinner, FaExclamationCircle, FaHistory } from "react-icons/fa";
 import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas'; // Import html2canvas
 import Navigation from "./Navigation";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
@@ -17,6 +18,9 @@ const ToolComponent = () => {
   const [useFileUpload, setUseFileUpload] = useState(false);
   const [file, setFile] = useState(null);
   const [predictionHistory, setPredictionHistory] = useState([]);
+  
+  // Create a ref for the chart container
+  const chartRef = useRef(null);
 
   const hvr1_start = 16024, hvr1_end = 16365;
   const hvr2_start = 73, hvr2_end = 340;
@@ -128,26 +132,27 @@ const ToolComponent = () => {
     setError("");
   };
 
-  const downloadPDF = () => {
+  const downloadPDF = async () => {
+    // Create a new PDF document
     const doc = new jsPDF();
     doc.setLineWidth(0.5);
     doc.rect(10, 10, 190, 277); // Drawing a border around the page
-
+  
     // Set the font and color for the logo
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(41, 111, 157); // Blue color for logo
     doc.text("mitoMatch", 20, 20); // Positioning the logo at the top left corner
-
+  
     // Set font for "Prediction Report"
     let yPosition = 35;
     doc.setFontSize(18);
     doc.setFont("times", "bold");
     doc.setTextColor(0, 0, 0);
     doc.text("Prediction Report", 20, yPosition); // Title section
-
+  
     yPosition += 15;
-
+  
     // Set font and color for description text
     doc.setFontSize(12);
     doc.setFont("times", "normal");
@@ -158,7 +163,7 @@ const ToolComponent = () => {
       yPosition,
       { maxWidth: 170 }
     );
-
+  
     // HVR1 Section
     if (inputType !== "hvr2") {
       yPosition += 15;
@@ -171,7 +176,7 @@ const ToolComponent = () => {
       yPosition += 10;
       doc.text(hvr1Wrapped, 20, yPosition);
     }
-
+  
     // HVR2 Section
     if (inputType !== "hvr1") {
       yPosition += 35;
@@ -184,7 +189,7 @@ const ToolComponent = () => {
       yPosition += 10;
       doc.text(hvr2Wrapped, 20, yPosition);
     }
-
+  
     // Predicted Ethnicity Section
     yPosition += 30;
     doc.setFontSize(12);
@@ -195,32 +200,66 @@ const ToolComponent = () => {
     doc.setFont("courier", "normal");
     doc.setTextColor(0, 123, 255); // Blue color for ethnicity
     doc.text(ethnicity, ethnicityXPosition, yPosition); // Ethnicity text on the same line
-
+    doc.setTextColor(0, 0, 0); // Reset color to black
+  
+    // Add the pie chart to the PDF using html2canvas
+    if (chartRef.current && probabilities) {
+      try {
+        // Get the size of the original chart container
+        const chartContainer = chartRef.current;
+        const containerWidth = chartContainer.offsetWidth;
+        const containerHeight = chartContainer.offsetHeight;
+        
+        // Capture the chart with proper dimensions
+        const canvas = await html2canvas(chartContainer, {
+          width: containerWidth,
+          height: containerHeight,
+          scale: 2, // Higher scale for better quality
+          logging: false,
+          useCORS: true
+        });
+        
+        const chartImgData = canvas.toDataURL('image/png');
+        
+        // Add the chart image to the PDF
+        yPosition += 20;
+        doc.setFontSize(12);
+        doc.setFont("times", "bold");
+        doc.text("Ethnicity Distribution Chart:", 20, yPosition);
+        
+        yPosition += 10;
+        
+        // Calculate aspect ratio to prevent stretching
+        const imgWidth = 150; // Max width for the chart in the PDF
+        const aspectRatio = canvas.height / canvas.width;
+        const imgHeight = imgWidth * aspectRatio; // Maintain aspect ratio
+        
+        // Center the chart horizontally
+        const leftMargin = (210 - imgWidth) / 2; // 210 is A4 width in mm
+        
+        // Add the chart image with proper aspect ratio
+        doc.addImage(chartImgData, 'PNG', leftMargin, yPosition, imgWidth, imgHeight);
+        
+        yPosition += imgHeight + 10; // Move position below the chart
+      } catch (error) {
+        console.error("Error capturing chart:", error);
+      }
+    }
+  
     // Probability Details Section
     if (probabilities) {
-      yPosition += 20;
+      yPosition += 10;
       doc.setFontSize(12);
       doc.setFont("times", "bold");
-      doc.setTextColor(0, 0, 0);
-      doc.text("Detailed Probabilities:", 20, yPosition);
-      
-      yPosition += 10;
-      doc.setFontSize(10);
-      doc.setFont("courier", "normal");
-      
-      Object.entries(probabilities).forEach(([ethnic, prob]) => {
-        yPosition += 8;
-        doc.text(`${ethnic}: ${prob}%`, 30, yPosition);
-      });
     }
-
+  
     // Footer Section
     yPosition += 25;
     doc.setFontSize(10);
     doc.setFont("times", "italic");
     doc.setTextColor(150); // Gray color for footer
     doc.text("Generated by mitoMatch - Powered by jsPDF", 20, yPosition);
-
+  
     // Save the PDF
     doc.save("Prediction_Report.pdf");
   };
@@ -324,7 +363,7 @@ const ToolComponent = () => {
               {probabilities && (
                 <div className="probability-chart">
                   <h3>Ethnicity Probability Distribution</h3>
-                  <div style={{ width: '100%', height: 300 }}>
+                  <div style={{ width: '100%', height: 300 }} ref={chartRef}>
                     <ResponsiveContainer>
                       <PieChart>
                         <Pie
