@@ -1,110 +1,384 @@
 @import './variables.scss';
 
 .tool-description {
-    font-size: 18px;
-    color: $PrimaryFontColour;
-    text-align: center;
-    margin-bottom: 20px;
-    padding-top: 18dvh;
-    font-weight: 500;
+  font-size: 18px;
+  color: $PrimaryFontColour;
+  text-align: center;
+  margin: 0 auto 20px;
+  padding-top: 18dvh;
+  font-weight: 500;
+  max-width: 90%;
+}
+
+.input-type-selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: #f9f9f9;
+  padding: 15px;
+  margin: 30px auto;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+  label {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    color: #333;
+    flex-grow: 1;
+    
+    input {
+      margin-right: 10px;
+      accent-color: #007bff;
+      transform: scale(1.2);
+    }
+  }
   
+  label:hover {
+    background: #e3f2fd;
+    transform: scale(1.02);
+  }
+}
+
+.tool-container {
+  max-width: 800px;
+  margin: 0 auto 50px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(3, 3, 3, 0.3);
+
+  .input-section {
+    margin: 0;
+    
+    .mode-toggle-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: max-content;
+      margin: 0 0 20px;
+      padding: 10px 20px;
+      background-color: #4290d9;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .mode-toggle-button:hover {
+      background-color: #40a9ff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .file-upload-section {
+      display: flex;
+      flex-direction: column;
+      
+      h3 {
+        font-size: 18px;
+        color: $PrimaryFontColour;
+        margin-bottom: 20px;
+        font-weight: 400;
+      }
+      
+      .file-input {
+        margin: 10px 0 20px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px dashed #ccc;
+        border-radius: 5px;
+        width: 100%;
+        cursor: pointer;
+      }
+      
+      .file-name {
+        margin: 10px 0;
+        padding: 8px 12px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        color: #666;
+      }
+    }
+  }
+}
+
+.sequence-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .input-label {
+    color: #333;
+    display: block;
+    width:auto;
+    padding: 12px 18px;
+    border-radius: 8px; 
+    margin: 5px 0;
+    background: #fff; 
+    border: 1px solid #ddd; 
+    transition: all 0.3s ease;
+    resize: none;
+    height: 100px;
+    font-size: 14px;
+    
+    &:focus {
+      border-color: #4290d9;
+      box-shadow: 0 0 0 2px rgba(66, 144, 217, 0.2);
+      outline: none;
+    }
+  }
+}
+
+.predict-button {
+  padding: 12px 20px;
+  background-color: $PrimaryFontColour;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+  &:hover:not(:disabled) {
+    background-color: #40a9ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+.error-message {
+  margin-top: 15px;
+  padding: 12px 15px;
+  background-color: #fff2f0;
+  border: 1px solid #ffccc7;
+  border-radius: 5px;
+  color: #ff4d4f;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.prediction-result {
+  border-radius: 8px;
+  
+  h2 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .download-button,
+  .reset-button {
+    padding: 10px 20px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    margin: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .download-button {
+    background-color: #52c41a;
+    
+    &:hover {
+      background-color: #73d13d;
+    }
+  }
+  
+  .reset-button {
+    background-color: #ff4d4f;
+    
+    &:hover {
+      background-color: #ff7875;
+    }
+  }
+}
+
+// .prediction-history {
+//   margin-top: 25px;
+//   padding: 20px;
+//   background-color: #fff;
+//   border-radius: 8px;
+//   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+//   h3 {
+//     font-size: 1.2rem;
+//     color: #333;
+//     margin-bottom: 15px;
+//     display: flex;
+//     align-items: center;
+//     gap: 10px;
+//   }
+  
+//   .history-icon {
+//     color: #4290d9;
+//   }
+  
+//   ul {
+//     list-style-type: none;
+//     padding: 0;
+//     margin: 0;
+
+//     li {
+//       padding: 12px 15px;
+//       background-color: #f5f5f5;
+//       border-radius: 6px;
+//       margin-bottom: 8px;
+//       font-size: 0.95rem;
+//       color: #333;
+//       transition: background-color 0.2s ease;
+//       border-left: 3px solid #4290d9;
+      
+//       &:hover {
+//         background-color: #e6f7ff;
+//       }
+//     }
+//   }
+// }
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .tool-container,
+  .input-type-selection {
+    max-width: 90%;
+    margin-top: 0;
+    box-shadow: none;
+  }
+  .sequence-form .input-label{
+    width:auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .tool-description {
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
   }
   
   .input-type-selection {
-    display: flex;
-    align-items: flex-start;
-    background: #f9f9f9;
-    padding-right: $paddingLeftDesktop;
-    margin: 30px auto;
-    max-width: 800px;
-    padding-left: $paddingLeftDesktop;
-    border-radius: 10px;
-  
+    flex-direction: column;
+    align-items: stretch;
+    
     label {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      margin: 5px 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-      color: #333;
-  
-      input {
-        margin-right: 10px;
-        accent-color: #007bff;
-        transform: scale(1.2);
-      }
+      margin: 3px 0;
+      justify-content: flex-start;
     }
-     label:hover {
-      background: #e3f2fd;
-      transform: scale(1.02);
-  }
   }
   
-  
+  .prediction-result {
+    text-align: center;
+    
+    h2 {
+      font-size: 1.1rem;
+    }
+    
+    .download-button,
+    .reset-button {
+      width: 100%;
+      margin: 5px 0;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .tool-description {
+    margin: 0 auto 20px;
+    padding-top: 12dvh;
+    font-size: 15px;
+  }
   .tool-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding-left: $paddingLeftDesktop;
-    padding-right: $paddingLeftDesktop;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(3, 3, 3, 0.3);
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-bottom: 50px;
-  
-    .input-section {
-      margin: 20px 0;
-    
-      .mode-toggle-button {
-        // display: block;
-        margin-bottom: 10px;
-        // margin: 0 auto 20px;
-        padding: 10px 20px;
-        background-color: #4290d9;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background-color 0.3s;
-      }
-      .mode-toggle-button:hover {
-        background-color: #40a9ff;
-      }
-      
-      
-      .file-upload-section {
-        text-align: left;
-        display: flex;
-        align-items: left;
-        flex-direction: column;
-        
-        h3{
-          font-size: 18px;
-          color: $PrimaryFontColour;
-          margin-bottom: 20px;
-          font-weight: 400;
-          }
-      
-        .file-input {
-          margin-top: 10px;
-                margin-bottom: 20px;
-  
-      
-          .file-name {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #666;
-          }
-        }
-      
-      }
-    }
+    padding: 15px;
   }
   
-  @media (max-width: 768px) {
-    
+  .input-section .mode-toggle-button {
+    width: 100%;
+    font-size: 0.9rem;
   }
+  
+  // .sequence-form .input-label {
+  //   padding: 10px;
+  //   font-size: 13px;
+  // }
+  
+  .predict-button {
+    width: 100%;
+    max-width: none;
+    font-size: 0.9rem;
+  }
+  
+  .prediction-history h3 {
+    font-size: 1.1rem;
+  }
+  
+  .prediction-history ul li {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .tool-description {
+    // padding-top: 8dvh;
+    font-size: 14px;
+  }
+  
+  .input-type-selection label {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .error-message {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+  
+  .prediction-result h2 {
+    font-size: 1rem;
+  }
+}

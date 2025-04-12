@@ -294,7 +294,7 @@ const ToolComponent = () => {
               </button>
             </div>
           )}
-          {predictionHistory.length > 0 && (
+          {/* {predictionHistory.length > 0 && (
             <div className="prediction-history">
               <h3>
                 <FaHistory className="history-icon" /> Prediction History
@@ -305,7 +305,7 @@ const ToolComponent = () => {
                 ))}
               </ul>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </>
