@@ -8,9 +8,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import StandardScaler
 
 # Load pre-trained models and transformers
-ml_model_only = joblib.load('./model/hvr1_ethnicity_model_files/gradient_boosting_model.pkl')  
-scaler_kmer = joblib.load('./model/hvr1_ethnicity_model_files/scaler_kmer.pkl')  
-kmer_vectorizer = joblib.load('./model/hvr1_ethnicity_model_files/kmer_vectorizer.pkl')  
+ml_model_only = joblib.load('./model/hvr1_ethnicity_model_files/gradient_boosting_classifier.pkl') 
+scaler_kmer = joblib.load('./model/hvr1_ethnicity_model_files/scaler_kmer.pkl') 
+kmer_vectorizer = joblib.load('./model/hvr1_ethnicity_model_files/kmer_vectorizer.pkl') 
 label_encoder = joblib.load('./model/hvr1_ethnicity_model_files/label_encoder.pkl')  
 
 # Initialize Flask app
@@ -38,52 +38,61 @@ def predict_ethnicity_ml_model_only(sequence, model_type="hvr1_ethnicity_model_f
     # Preprocess sequence
     clean_sequence = preprocess_sequence(sequence)
     
-    # For now, we'll assume all predictions use the HVR1 model
-    # In a production system, you'd load different models based on model_type
-    
     # Convert sequence to feature vector using k-mer encoding
     input_vector = vectorize_hvr1_sequence(clean_sequence)
-
+    
     # Scale the input features using the pre-trained scaler
     input_vector_scaled = scaler_kmer.transform(input_vector)
-
-    # Predict ethnicity using the Gradient Boosting model
-    prediction = ml_model_only.predict(input_vector_scaled)
-
-    # Decode the label back to ethnicity
+    
+    # Get raw probabilities for each class
+    probability_scores = ml_model_only.predict_proba(input_vector_scaled)[0]
+    
+    # Decode the labels back to ethnicities
     ethnicity_labels = label_encoder.classes_
-    predicted_ethnicity = ethnicity_labels[prediction[0]]
-
-    return predicted_ethnicity
+    
+    # Get the predicted class (highest probability)
+    predicted_index = np.argmax(probability_scores)
+    predicted_ethnicity = ethnicity_labels[predicted_index]
+    
+    # Convert probabilities to percentages and create a dictionary
+    ethnicity_probabilities = {
+        ethnicity_labels[i]: round(float(probability_scores[i]) * 100, 2) 
+        for i in range(len(ethnicity_labels))
+    }
+    
+    return predicted_ethnicity, ethnicity_probabilities
 
 @app.route("/", methods=["GET"])
 def home():
     return "Flask API is Running!"
-
-
+ 
 # Define the /predict_ml_model_only route
 @app.route("/predict_ml_model_only", methods=["POST"])
 def predict_ml_model_only_endpoint():
     data = request.get_json()
-
+    
     try:
         # Extract sequence and model_type from the request
         sequence = data.get("sequence")
         model_type = data.get("model_type", "hvr1_ethnicity_model_files")
-
+        
         # Check if sequence is provided
         if not sequence:
             return jsonify({"error": "Sequence is required!"}), 400
-
+        
         # Validate the sequence length - adjust as needed for different types
         if len(sequence) < 10:  # Lowered for testing, adjust based on your needs
             raise ValueError("Invalid sequence length: The sequence is too short.")
-
+        
         # Predict the ethnicity using the machine learning model
-        ethnicity = predict_ethnicity_ml_model_only(sequence, model_type)
-
-        return jsonify({"prediction": ethnicity, "model_version": "v1.0"})
-
+        ethnicity, probabilities = predict_ethnicity_ml_model_only(sequence, model_type)
+        
+        return jsonify({
+            "prediction": ethnicity, 
+            "probabilities": probabilities,
+            "model_version": "v1.0"
+        })
+    
     except ValueError as ve:
         return jsonify({"error": f"Value Error: {str(ve)}"}), 400
     except KeyError as ke:
