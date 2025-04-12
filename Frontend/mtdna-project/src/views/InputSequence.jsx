@@ -5,6 +5,7 @@ import HeaderComponent from "./subComponents/HeaderComponent";
 import bannerImg from "../assets/bannerImg.png";
 import { FaRegCircle, FaRegCheckCircle, FaRegDotCircle } from "react-icons/fa";
 import Navigation from "./subComponents/Navigation";
+import '../cssStyles/inputSequenceCss.scss'
 const InputSequence = () => {
   const navigate = useNavigate();
 
