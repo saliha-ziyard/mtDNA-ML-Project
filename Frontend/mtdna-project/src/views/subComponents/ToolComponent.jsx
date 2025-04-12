@@ -4,11 +4,14 @@ import axios from "axios";
 import { FaSpinner, FaExclamationCircle, FaHistory } from "react-icons/fa";
 import { jsPDF } from "jspdf";
 import Navigation from "./Navigation";
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+
 const ToolComponent = () => {
   const [inputType, setInputType] = useState("combined"); // Track input type
   const [hvr1, setHvr1] = useState("");
   const [hvr2, setHvr2] = useState("");
   const [ethnicity, setEthnicity] = useState("");
+  const [probabilities, setProbabilities] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [useFileUpload, setUseFileUpload] = useState(false);
@@ -17,6 +20,9 @@ const ToolComponent = () => {
 
   const hvr1_start = 16024, hvr1_end = 16365;
   const hvr2_start = 73, hvr2_end = 340;
+
+  // Colors for the pie chart
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'];
 
   const handleFileChange = async (e) => {
     const uploadedFile = e.target.files[0];
@@ -94,6 +100,7 @@ const ToolComponent = () => {
       const response = await axios.post("http://127.0.0.1:5000/predict_ml_model_only", requestData);
   
       setEthnicity(response.data.prediction);
+      setProbabilities(response.data.probabilities);
       setPredictionHistory([...predictionHistory, response.data.prediction]);
     } catch (error) {
       setError("Error: Unable to process the request. Please try again.");
@@ -102,13 +109,22 @@ const ToolComponent = () => {
     }
   };
   
-  
+  // Prepare data for pie chart
+  const preparePieChartData = () => {
+    if (!probabilities) return [];
+    
+    return Object.entries(probabilities).map(([name, value]) => ({
+      name,
+      value
+    }));
+  };
 
   const resetForm = () => {
     setHvr1("");
     setHvr2("");
     setFile(null);
     setEthnicity("");
+    setProbabilities(null);
     setError("");
   };
 
@@ -179,6 +195,24 @@ const ToolComponent = () => {
     doc.setFont("courier", "normal");
     doc.setTextColor(0, 123, 255); // Blue color for ethnicity
     doc.text(ethnicity, ethnicityXPosition, yPosition); // Ethnicity text on the same line
+
+    // Probability Details Section
+    if (probabilities) {
+      yPosition += 20;
+      doc.setFontSize(12);
+      doc.setFont("times", "bold");
+      doc.setTextColor(0, 0, 0);
+      doc.text("Detailed Probabilities:", 20, yPosition);
+      
+      yPosition += 10;
+      doc.setFontSize(10);
+      doc.setFont("courier", "normal");
+      
+      Object.entries(probabilities).forEach(([ethnic, prob]) => {
+        yPosition += 8;
+        doc.text(`${ethnic}: ${prob}%`, 30, yPosition);
+      });
+    }
 
     // Footer Section
     yPosition += 25;
@@ -286,6 +320,42 @@ const ToolComponent = () => {
           {ethnicity && (
             <div className="prediction-result">
               <h2>Predicted Ethnicity: {ethnicity}</h2>
+              
+              {probabilities && (
+                <div className="probability-chart">
+                  <h3>Ethnicity Probability Distribution</h3>
+                  <div style={{ width: '100%', height: 300 }}>
+                    <ResponsiveContainer>
+                      <PieChart>
+                        <Pie
+                          data={preparePieChartData()}
+                          cx="50%"
+                          cy="50%"
+                          labelLine={true}
+                          label={({ name, value }) => `${name}: ${value}%`}
+                          outerRadius={100}
+                          fill="#8884d8"
+                          dataKey="value"
+                        >
+                          {preparePieChartData().map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip formatter={(value) => `${value}%`} />
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                  
+                  <div className="probability-text">
+                    <h4>Detailed Probabilities:</h4>
+                    {Object.entries(probabilities).map(([ethnic, prob]) => (
+                      <p key={ethnic}>{ethnic}: {prob}%</p>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
               <button onClick={downloadPDF} className="download-button">
                 Download Report
               </button>
@@ -294,18 +364,6 @@ const ToolComponent = () => {
               </button>
             </div>
           )}
-          {/* {predictionHistory.length > 0 && (
-            <div className="prediction-history">
-              <h3>
-                <FaHistory className="history-icon" /> Prediction History
-              </h3>
-              <ul>
-                {predictionHistory.map((prediction, index) => (
-                  <li key={index}>{prediction}</li>
-                ))}
-              </ul>
-            </div>
-          )} */}
         </div>
       </div>
     </>
