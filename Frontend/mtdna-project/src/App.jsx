@@ -11,6 +11,7 @@ import MitochondrialDNA from './views/subComponents/MitochondrialDNA';
 // import Applications from './views/Applications';
 import AboutUs from './views/subComponents/AboutUs';
 import Login from './views/subComponents/Login';
+import ToolSelection from './views/subComponents/ToolSelection';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/mitochondrial-dna" element={<MitochondrialDNA />} />
           <Route path="/about-us" element={<AboutUs />} /> 
           <Route path="/input-sequence" element={<InputSequence />} />
+          <Route path='/tool-selection' element={<ToolSelection/>} />
           <Route path="/tool" element={<ToolComponent />} />
           <Route path="/login" element={<Login />} />
         </Routes>

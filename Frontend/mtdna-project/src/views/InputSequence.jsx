@@ -10,7 +10,8 @@ const InputSequence = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate("/tool");
+    // navigate("/tool");
+    navigate("/tool-selection")
   };
 
   return (
@@ -35,7 +36,7 @@ const InputSequence = () => {
               <div className="feature-card">
                 <h3>🔬 Advanced Prediction</h3>
                 <p>
-                  Predict ethnicity based on mtDNA sequences with high accuracy.
+                  Predict Ethnicity based on mtDNA sequences with high accuracy.
                 </p>
               </div>
               <div className="feature-card">
@@ -45,9 +46,9 @@ const InputSequence = () => {
                 </p>
               </div>
               <div className="feature-card">
-                <h3>🧬 Haplogroup Insights</h3>
+                <h3>🌎 Geographic Analysis</h3>
                 <p>
-                  Gain detailed information on haplogroups and genetic lineage.
+                  Predict Geo Location based on mtDNA sequences with high accuracy.
                 </p>
               </div>
               <div className="feature-card">
@@ -76,8 +77,7 @@ const InputSequence = () => {
               <div className="step">
                 <div className="step-icon">3️⃣</div>
                 <p>
-                  <span>Get Results:</span> View ethnicity prediction with
-                  haplogroup info.
+                  <span>Get Results:</span> View Ethnicity and Geo Location prediction results.
                 </p>
               </div>
             </div>
