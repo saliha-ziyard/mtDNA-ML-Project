@@ -1,13 +1,23 @@
 @import './variables.scss';
 
+.page-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  h1{
+    color: $PrimaryFontColour;
+    margin-bottom: 0;
+  }
+}
 .tool-description {
   font-size: 18px;
   color: $PrimaryFontColour;
   text-align: center;
-  margin: 0 auto 20px;
-  padding-top: 18dvh;
+  // margin: 0 auto 20px;
+  // padding-top: 18dvh;
   font-weight: 500;
-  max-width: 90%;
+  // max-width: 90%;
 }
 
 .input-type-selection {
@@ -121,7 +131,7 @@
   .input-label {
     color: #333;
     display: block;
-    width:auto;
+    width:90%;
     padding: 12px 18px;
     border-radius: 8px; 
     margin: 5px 0;
@@ -283,6 +293,26 @@
 
 /* Responsive styles */
 @media (max-width: 900px) {
+  .page-header{
+    padding: 20px;
+    h1{
+      color: $PrimaryFontColour;
+      margin-bottom: 0;
+      font-size: 25px;
+      text-align: center;
+    }
+    p{
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 0;
+    }
+  }
+  .tool-description {
+    font-size: 16px;
+    margin: 0;
+    padding: 0 20px;
+    text-align: center;
+  }
   .tool-container,
   .input-type-selection {
     max-width: 90%;
@@ -290,16 +320,12 @@
     box-shadow: none;
   }
   .sequence-form .input-label{
-    width:auto;
+    width:90%;
   }
 }
 
 @media (max-width: 768px) {
-  .tool-description {
-    font-size: 16px;
-    margin: 0;
-    padding: 0;
-  }
+
   
   .input-type-selection {
     flex-direction: column;
@@ -327,19 +353,14 @@
 }
 
 @media (max-width: 576px) {
-  .tool-description {
-    margin: 0 auto 20px;
-    padding-top: 12dvh;
-    font-size: 15px;
-  }
-  .tool-container {
-    padding: 15px;
-  }
+  // .tool-container {
+  //   padding: 15px;
+  // }
   
-  .input-section .mode-toggle-button {
-    width: 100%;
-    font-size: 0.9rem;
-  }
+  // .input-section .mode-toggle-button {
+  //   width: 100%;
+  //   font-size: 0.9rem;
+  // }
   
   // .sequence-form .input-label {
   //   padding: 10px;

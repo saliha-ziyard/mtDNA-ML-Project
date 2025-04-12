@@ -3,12 +3,11 @@
 // import axios from "axios";
 // import { FaSpinner, FaExclamationCircle, FaHistory } from "react-icons/fa";
 // import { jsPDF } from "jspdf";
-// import html2canvas from 'html2canvas'; // Import html2canvas
+// import html2canvas from 'html2canvas';
 // import Navigation from "./Navigation";
 // import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
-// const ToolComponent = () => {
-//   const [inputType, setInputType] = useState("combined"); // Track input type
+// const EthnicityTool = () => {
 //   const [hvr1, setHvr1] = useState("");
 //   const [hvr2, setHvr2] = useState("");
 //   const [ethnicity, setEthnicity] = useState("");
@@ -51,15 +50,9 @@
 //           return;
 //         }
 
-//         // Based on input type, slice HVR1 and HVR2 accordingly
-//         if (inputType === "hvr1") {
-//           setHvr1(sequence.slice(hvr1_start - 1, hvr1_end));
-//         } else if (inputType === "hvr2") {
-//           setHvr2(sequence.slice(hvr2_start - 1, hvr2_end));
-//         } else if (inputType === "combined") {
-//           setHvr1(sequence.slice(hvr1_start - 1, hvr1_end));
-//           setHvr2(sequence.slice(hvr2_start - 1, hvr2_end));
-//         }
+//         // Extract both HVR1 and HVR2 for combined analysis only
+//         setHvr1(sequence.slice(hvr1_start - 1, hvr1_end));
+//         setHvr2(sequence.slice(hvr2_start - 1, hvr2_end));
 //       };
 //       reader.readAsText(uploadedFile);
 //     }
@@ -70,37 +63,19 @@
 //     setLoading(true);
 //     setError("");
   
-//     let sequence = "";
-//     let modelType = "";  // We'll set the model type here
-  
-//     if (inputType === "hvr1") {
-//       if (!hvr1) {
-//         setError("Error: HVR1 sequence is required.");
-//         setLoading(false);
-//         return;
-//       }
-//       sequence = hvr1;
-//       modelType = "hvr1_ethnicity_model_files"; // The folder name for HVR1 model
-//     } else if (inputType === "hvr2") {
-//       if (!hvr2) {
-//         setError("Error: HVR2 sequence is required.");
-//         setLoading(false);
-//         return;
-//       }
-//       sequence = hvr2;
-//       modelType = "hvr2_ethnicity"; // The folder name for HVR2 model
-//     } else {
-//       if (!hvr1 || !hvr2) {
-//         setError("Error: Both HVR1 and HVR2 sequences are required.");
-//         setLoading(false);
-//         return;
-//       }
-//       sequence = hvr1 + hvr2; // Combine for the backend
-//       modelType = "combined_ethnicity"; // The folder name for Combined model
+//     // Validate that we have both sequences
+//     if (!hvr1 || !hvr2) {
+//       setError("Error: Both HVR1 and HVR2 sequences are required.");
+//       setLoading(false);
+//       return;
 //     }
+    
+//     // Always use combined sequences
+//     const sequence = hvr1 + hvr2;
+//     const modelType = "combined_ethnicity"; 
   
 //     try {
-//       const requestData = { sequence, model_type: modelType }; // Send model_type in the request
+//       const requestData = { sequence, model_type: modelType };
 //       const response = await axios.post("http://127.0.0.1:5000/predict_ml_model_only", requestData);
   
 //       setEthnicity(response.data.prediction);
@@ -149,7 +124,7 @@
 //     doc.setFontSize(18);
 //     doc.setFont("times", "bold");
 //     doc.setTextColor(0, 0, 0);
-//     doc.text("Prediction Report", 20, yPosition); // Title section
+//     doc.text("Ethnicity Prediction Report", 20, yPosition); // Title section with "Ethnicity" added
   
 //     yPosition += 15;
   
@@ -158,37 +133,33 @@
 //     doc.setFont("times", "normal");
 //     doc.setTextColor(0, 0, 0); // Black color for description text
 //     doc.text(
-//       "Using mitochondrial DNA sequences (HVR1 and HVR2), this tool predicts ethnicity and geolocation of individuals.",
+//       "Using mitochondrial DNA sequences (HVR1 and HVR2), this analysis predicts the ethnicity of the individual.",
 //       20,
 //       yPosition,
 //       { maxWidth: 170 }
 //     );
   
 //     // HVR1 Section
-//     if (inputType !== "hvr2") {
-//       yPosition += 15;
-//       doc.setFontSize(11);
-//       doc.setFont("times", "bold");
-//       doc.text("HVR1 Sequence:", 20, yPosition);
-//       doc.setFontSize(12);
-//       doc.setFont("courier", "normal");
-//       const hvr1Wrapped = doc.splitTextToSize(hvr1, 170);
-//       yPosition += 10;
-//       doc.text(hvr1Wrapped, 20, yPosition);
-//     }
+//     yPosition += 15;
+//     doc.setFontSize(11);
+//     doc.setFont("times", "bold");
+//     doc.text("HVR1 Sequence:", 20, yPosition);
+//     doc.setFontSize(12);
+//     doc.setFont("courier", "normal");
+//     const hvr1Wrapped = doc.splitTextToSize(hvr1, 170);
+//     yPosition += 10;
+//     doc.text(hvr1Wrapped, 20, yPosition);
   
 //     // HVR2 Section
-//     if (inputType !== "hvr1") {
-//       yPosition += 35;
-//       doc.setFontSize(11);
-//       doc.setFont("times", "bold");
-//       doc.text("HVR2 Sequence:", 20, yPosition);
-//       doc.setFontSize(12);
-//       doc.setFont("courier", "normal");
-//       const hvr2Wrapped = doc.splitTextToSize(hvr2, 170);
-//       yPosition += 10;
-//       doc.text(hvr2Wrapped, 20, yPosition);
-//     }
+//     yPosition += 35;
+//     doc.setFontSize(11);
+//     doc.setFont("times", "bold");
+//     doc.text("HVR2 Sequence:", 20, yPosition);
+//     doc.setFontSize(12);
+//     doc.setFont("courier", "normal");
+//     const hvr2Wrapped = doc.splitTextToSize(hvr2, 170);
+//     yPosition += 10;
+//     doc.text(hvr2Wrapped, 20, yPosition);
   
 //     // Predicted Ethnicity Section
 //     yPosition += 30;
@@ -261,43 +232,20 @@
 //     doc.text("Generated by mitoMatch - Powered by jsPDF", 20, yPosition);
   
 //     // Save the PDF
-//     doc.save("Prediction_Report.pdf");
+//     doc.save("Ethnicity_Prediction_Report.pdf");
 //   };
 
 //   return (
 //     <>
-//       <Navigation />
-
-//       <h2 className="tool-description">Select your input type and provide the corresponding sequence(s)</h2>
-//       <div className="input-type-selection">
-//             <label>
-//               <input
-//                 type="radio"
-//                 value="hvr1"
-//                 checked={inputType === "hvr1"}
-//                 onChange={() => setInputType("hvr1")}
-//               />
-//               HVR1 Only
-//             </label>
-//             <label>
-//               <input
-//                 type="radio"
-//                 value="hvr2"
-//                 checked={inputType === "hvr2"}
-//                 onChange={() => setInputType("hvr2")}
-//               />
-//               HVR2 Only
-//             </label>
-//             <label>
-//               <input
-//                 type="radio"
-//                 value="combined"
-//                 checked={inputType === "combined"}
-//                 onChange={() => setInputType("combined")}
-//               />
-//               Combined (HVR1 & HVR2)
-//             </label>
+//       {/* <Navigation /> */}
+      
+//       <div className="page-header">
+//         <h1>mtDNA Ethnicity Prediction Tool</h1>
+//         <p>Analyze mitochondrial DNA sequences to predict ethnic origins with our advanced machine learning model</p>
 //       </div>
+
+//       <h2 className="tool-description">Upload or enter your combined (HVR1 & HVR2) sequence for ethnicity prediction</h2>
+      
 //       <div className="tool-container">
 //         <div className="input-section">
 //           <button
@@ -326,22 +274,24 @@
 //             </div>
 //           ) : (
 //             <form onSubmit={handleSubmit} className="sequence-form">
-//               {inputType !== "hvr2" && (
+//               <div className="sequence-input-container">
+//                 <label className="sequence-label">HVR1 Sequence:</label>
 //                 <textarea
 //                   value={hvr1}
 //                   onChange={(e) => setHvr1(e.target.value)}
 //                   placeholder="Enter HVR1 sequence..."
 //                   className="input-label"
 //                 />
-//               )}
-//               {inputType !== "hvr1" && (
+//               </div>
+//               <div className="sequence-input-container">
+//                 <label className="sequence-label">HVR2 Sequence:</label>
 //                 <textarea
 //                   value={hvr2}
 //                   onChange={(e) => setHvr2(e.target.value)}
 //                   placeholder="Enter HVR2 sequence..."
 //                   className="input-label"
 //                 />
-//               )}
+//               </div>
 //               <button
 //                 type="submit"
 //                 className="predict-button"
@@ -409,4 +359,46 @@
 //   );
 // };
 
-// export default ToolComponent;
+// export default EthnicityTool;
+
+
+
+
+import React from "react";
+import '../../cssStyles/toolComponentCss.scss';
+// import Navigation from "../common/Navigation";
+import PageHeader from "../subComponents/ToolComponent/PageHeader";
+import SequenceAnalyzer from "../subComponents/ToolComponent/SequenceAnalyzer";
+
+const EthnicityTool = () => {
+  return (
+    <>
+      {/* <Navigation /> */}
+      
+      <PageHeader 
+        title="mtDNA Ethnicity Prediction Tool"
+        description="Analyze mitochondrial DNA sequences to predict ethnic origins with our advanced machine learning model"
+      />
+
+      <h2 className="tool-description">Upload or enter your combined (HVR1 & HVR2) sequence for ethnicity prediction</h2>
+      
+      <SequenceAnalyzer 
+        modelEndpoint="http://127.0.0.1:5000/predict_ml_model_only"
+        modelType="combined_ethnicity"
+        resultType="Ethnicity"
+        buttonText="Predict Ethnicity"
+        reportTitle="Ethnicity Prediction Report"
+        fileName="Ethnicity_Prediction_Report.pdf"
+        description="Using mitochondrial DNA sequences (HVR1 and HVR2), this analysis predicts the ethnicity of the individual."
+      />
+    </>
+  );
+};
+
+export default EthnicityTool;
+
+
+
+
+
+

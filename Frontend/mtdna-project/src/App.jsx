@@ -5,13 +5,14 @@ import "./App.scss";
 import Home from './views/Home';
 import InputSequence from './views/InputSequence';
 import Navigation from './views/subComponents/Navigation';
-import ToolComponent from "./views/subComponents/ToolComponent";
+// import ToolComponent from "./views/subComponents/ToolComponent";
 import Footer from './views/subComponents/Footer';
 import MitochondrialDNA from './views/subComponents/MitochondrialDNA';
 // import Applications from './views/Applications';
 import AboutUs from './views/subComponents/AboutUs';
 import Login from './views/subComponents/Login';
 import ToolSelection from './views/subComponents/ToolSelection';
+import EthnicityTool from './views/subComponents/EthnicityTool';
 
 const App = () => {
   return (
@@ -25,7 +26,8 @@ const App = () => {
           <Route path="/about-us" element={<AboutUs />} /> 
           <Route path="/input-sequence" element={<InputSequence />} />
           <Route path='/tool-selection' element={<ToolSelection/>} />
-          <Route path="/tool" element={<ToolComponent />} />
+          <Route path='/ethnicity-tool' element={<EthnicityTool />} />
+          {/* <Route path="/tool" element={<ToolComponent />} /> */}
           <Route path="/login" element={<Login />} />
         </Routes>
 
