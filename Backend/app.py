@@ -8,10 +8,10 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import StandardScaler
 
 # Load pre-trained models and transformers
-ml_model_only = joblib.load('./model/hvr1_ethnicity_model_files/gradient_boosting_classifier.pkl') 
-scaler_kmer = joblib.load('./model/hvr1_ethnicity_model_files/scaler_kmer.pkl') 
-kmer_vectorizer = joblib.load('./model/hvr1_ethnicity_model_files/kmer_vectorizer.pkl') 
-label_encoder = joblib.load('./model/hvr1_ethnicity_model_files/label_encoder.pkl')  
+ml_model_only = joblib.load('./model/combined_ethnicity_model_files/gradient_boosting_classifier.pkl') 
+scaler_kmer = joblib.load('./model/combined_ethnicity_model_files/scaler_kmer.pkl') 
+kmer_vectorizer = joblib.load('./model/combined_ethnicity_model_files/kmer_vectorizer.pkl') 
+label_encoder = joblib.load('./model/combined_ethnicity_model_files/label_encoder.pkl')  
 
 # Initialize Flask app
 app = Flask(__name__)
