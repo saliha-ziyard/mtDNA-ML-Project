@@ -24,7 +24,7 @@ const InputSequence = () => {
         <p>
           Discover your ancestral origins using mitochondrial DNA (mtDNA)
           sequences. Our advanced machine learning model analyzes Hypervariable
-          Regions (HVR1 and HVR2) to predict your ethnicity and provide insights
+          Regions (HVR1 and HVR2) to predict your Ethnicity, Geographic location and provide insights
           into your genetic heritage.
         </p>
 

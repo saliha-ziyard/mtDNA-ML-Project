@@ -56,7 +56,7 @@ function Home() {
           <div className="features">
             <WhyUseCard
               title="Precision and Clarity"
-              description="From ethnicity predictions to haplogroup tracing, we help you map your genetic story with precision and clarity."
+              description="From Ethnicity predictions to Geo Location tracing, we help you map your genetic story with precision and clarity."
             />
             <WhyUseCard
               title="Cutting-Edge Technology"
