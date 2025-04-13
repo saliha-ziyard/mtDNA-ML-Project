@@ -1,6 +1,6 @@
 import React from "react";
 import '../../cssStyles/toolComponentCss.scss';
-// import Navigation from "../common/Navigation";
+// import Navigation from "../subComponents/Navigation";
 import SequenceAnalyzer from "../subComponents/ToolComponent/SequenceAnalyzer";
 
 const EthnicityTool = () => {

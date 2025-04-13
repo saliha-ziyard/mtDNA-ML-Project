@@ -29,7 +29,7 @@ const App = () => {
           <Route path='/ethnicity-tool' element={<EthnicityTool />} />
           <Route path='/geo-location-tool' element={<GeolocationTool />}/>
           {/* <Route path="/tool" element={<ToolComponent />} /> */}
-          <Route path="/login" element={<Login />} />
+          {/* <Route path="/login" element={<Login />} /> */}
         </Routes>
 
         <Footer />
