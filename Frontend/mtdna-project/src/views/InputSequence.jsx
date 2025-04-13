@@ -18,7 +18,7 @@ const InputSequence = () => {
     <>
       <Navigation />
 
-      <HeaderComponent image={bannerImg} text={"mtDNA Ethnicity Prediction"} />
+      <HeaderComponent image={bannerImg} text={"mtDNA Prediction Tools"} />
       <div className="input-sequence">
         <h2>Welcome to the mtDNA Ethnicity Prediction Tool</h2>
         <p>
