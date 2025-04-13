@@ -1,21 +1,20 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import FileUpload from './FileUpload';
+import FileUpload from '../FileUpload';
 import InputForm from './InputForm';
-import ErrorDisplay from './ErrorDisplay';
-import ResultDisplay from './ResultDisplay';
+import ErrorDisplay from '../ErrorDisplay';
+import ResultDisplay from '../ResultDisplay';
 
-const SequenceAnalyzer = ({ 
-  modelEndpoint = "http://127.0.0.1:5000/predict_concatenated",
-  modelType = "combined_ethnicity",
+const SequenceAnalyzerGeo = ({
+  modelEndpoint = "http://127.0.0.1:5000/predict_geo_location",
+  modelType = "hvr1_ethnicity",
   resultType = "Ethnicity",
   buttonText = "Predict",
   reportTitle = "Prediction Report",
   fileName = "Prediction_Report.pdf",
-  description = "Using mitochondrial DNA sequences (HVR1 and HVR2), this analysis predicts based on the provided sequence."
+  description = "Using mitochondrial DNA HVR1 sequence, this analysis predicts based on the provided sequence."
 }) => {
   const [hvr1, setHvr1] = useState("");
-  const [hvr2, setHvr2] = useState("");
   const [prediction, setPrediction] = useState("");
   const [probabilities, setProbabilities] = useState(null);
   const [error, setError] = useState("");
@@ -23,17 +22,15 @@ const SequenceAnalyzer = ({
   const [useFileUpload, setUseFileUpload] = useState(false);
   const [file, setFile] = useState(null);
   const [predictionHistory, setPredictionHistory] = useState([]);
-  
-  // Create a ref for the chart container
+
   const chartRef = useRef(null);
 
   const hvr1_start = 16024, hvr1_end = 16365;
-  const hvr2_start = 73, hvr2_end = 340;
 
   const handleFileChange = async (e) => {
     const uploadedFile = e.target.files[0];
     setFile(uploadedFile);
-    setError(""); // Clear previous errors
+    setError("");
 
     if (uploadedFile) {
       const reader = new FileReader();
@@ -53,9 +50,8 @@ const SequenceAnalyzer = ({
           return;
         }
 
-        // Extract both HVR1 and HVR2 for combined analysis only
+        // Extract only HVR1
         setHvr1(sequence.slice(hvr1_start - 1, hvr1_end));
-        setHvr2(sequence.slice(hvr2_start - 1, hvr2_end));
       };
       reader.readAsText(uploadedFile);
     }
@@ -65,26 +61,21 @@ const SequenceAnalyzer = ({
     e.preventDefault();
     setLoading(true);
     setError("");
-  
-    // Validate that we have both sequences
-    if (!hvr1 || !hvr2) {
-      setError("Error: Both HVR1 and HVR2 sequences are required.");
+
+    if (!hvr1) {
+      setError("Error: HVR1 sequence is required.");
       setLoading(false);
       return;
     }
-  
+
     try {
-      // Match the API request format from CoLab implementation
-      const requestData = { 
-        hvr1_sequence: hvr1, 
-        hvr2_sequence: hvr2,
-        model_type: modelType 
+      const requestData = {
+        hvr1_sequence: hvr1,
+        model_type: modelType
       };
-      
-      console.log("Sending data:", requestData);
-      
+
       const response = await axios.post(modelEndpoint, requestData);
-  
+
       setPrediction(response.data.prediction);
       setProbabilities(response.data.probabilities);
       setPredictionHistory([...predictionHistory, response.data.prediction]);
@@ -98,7 +89,6 @@ const SequenceAnalyzer = ({
 
   const resetForm = () => {
     setHvr1("");
-    setHvr2("");
     setFile(null);
     setPrediction("");
     setProbabilities(null);
@@ -114,7 +104,7 @@ const SequenceAnalyzer = ({
         >
           {useFileUpload ? "Switch to Manual Input" : "Switch to File Upload"}
         </button>
-        
+
         {useFileUpload ? (
           <FileUpload
             handleFileChange={handleFileChange}
@@ -126,23 +116,21 @@ const SequenceAnalyzer = ({
           <InputForm
             hvr1={hvr1}
             setHvr1={setHvr1}
-            hvr2={hvr2}
-            setHvr2={setHvr2}
             handleSubmit={handleSubmit}
             loading={loading}
             buttonText={`Predict ${resultType}`}
           />
         )}
-        
+
         <ErrorDisplay error={error} />
-        
+
         {prediction && (
           <ResultDisplay
             prediction={prediction}
             probabilities={probabilities}
             chartRef={chartRef}
             hvr1={hvr1}
-            hvr2={hvr2}
+            hvr2={null}
             resetForm={resetForm}
             resultType={resultType}
             reportTitle={reportTitle}
@@ -155,4 +143,4 @@ const SequenceAnalyzer = ({
   );
 };
 
-export default SequenceAnalyzer;
+export default SequenceAnalyzerGeo;

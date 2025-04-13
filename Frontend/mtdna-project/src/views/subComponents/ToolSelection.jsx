@@ -12,7 +12,7 @@ const ToolSelection = () => {
   };
 
   const handleSelectGeolocation = () => {
-    navigate("/geolocation-tool");
+    navigate("/geo-location-tool");
   };
 
   return (

@@ -13,7 +13,7 @@ import AboutUs from './views/subComponents/AboutUs';
 import Login from './views/subComponents/Login';
 import ToolSelection from './views/subComponents/ToolSelection';
 import EthnicityTool from './views/subComponents/EthnicityTool';
-
+import GeolocationTool from './views/subComponents/GeoLocationTool';
 const App = () => {
   return (
     <Router>
@@ -27,6 +27,7 @@ const App = () => {
           <Route path="/input-sequence" element={<InputSequence />} />
           <Route path='/tool-selection' element={<ToolSelection/>} />
           <Route path='/ethnicity-tool' element={<EthnicityTool />} />
+          <Route path='/geo-location-tool' element={<GeolocationTool />}/>
           {/* <Route path="/tool" element={<ToolComponent />} /> */}
           <Route path="/login" element={<Login />} />
         </Routes>
