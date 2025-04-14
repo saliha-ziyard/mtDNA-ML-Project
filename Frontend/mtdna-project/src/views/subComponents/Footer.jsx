@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa'; 
+import '../../cssStyles/FooterCss.scss'
 function Footer() {
   return (
     <footer className="footer">
@@ -13,10 +14,10 @@ function Footer() {
       <div className="footer-section">
         <h4>Quick Links</h4>
         <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#how-it-works">How It Works</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/input-sequence">Applications</a></li>
+          <li><a href="/mitochondrial-dna">mtDNA</a></li>
+          <li><a href="/about-us">About Us</a></li>
         </ul>
       </div>
       <div className="footer-section">
@@ -24,7 +25,6 @@ function Footer() {
         <ul>
           <li><a href="#privacy-policy">Privacy Policy</a></li>
           <li><a href="#terms-of-service">Terms of Service</a></li>
-          <li><a href="#faq">FAQ</a></li>
         </ul>
       </div>
       <div className="footer-section">
