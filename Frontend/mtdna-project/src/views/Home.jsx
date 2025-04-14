@@ -1,5 +1,8 @@
 import React from "react";
 import bannerImg from "../assets/bannerImg.png";
+import dna1 from '../assets/dna-1.png'
+import dna2 from '../assets/dna-2.png'
+import dna3 from '../assets/dna-3.png'
 import HowItWorksCard from "./cards/HowItWorksCard";
 import WhyUseCard from "./cards/WhyUseCard";
 import Footer from "./subComponents/Footer";
@@ -32,17 +35,17 @@ function Home() {
           <HowItWorksCard
             title="Step 1: Provide Your DNA Sequences"
             description="Submit your mtDNA sequences (HVR1, HVR2, or full genome) through our secure web interface."
-            imageUrl={bannerImg}
+            imageUrl={dna1}
           />
           <HowItWorksCard
             title="Step 2: Analyze Your Sequences"
             description="Our advanced machine learning model processes your sequences to predict genetic ancestry."
-            imageUrl={bannerImg}
+            imageUrl={dna2}
           />
           <HowItWorksCard
             title="Step 3: View Your Results"
             description="Explore detailed reports and visualizations of your genetic ancestry predictions."
-            imageUrl={bannerImg}
+            imageUrl={dna3}
           />
         </div>
       </div>
