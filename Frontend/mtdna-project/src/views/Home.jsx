@@ -4,7 +4,8 @@ import HowItWorksCard from "./cards/HowItWorksCard";
 import WhyUseCard from "./cards/WhyUseCard";
 import Footer from "./subComponents/Footer";
 import Navigation from "./subComponents/Navigation";
-import '../cssStyles/HomeCss.scss'
+import '../cssStyles/HomeCss.scss';
+import ScrollToTopButton from './subComponents/ScrollToTopButton';
 
 function Home() {
   return (
@@ -73,6 +74,7 @@ function Home() {
           </div>
         </div>
       </div>
+      <ScrollToTopButton />
     </>
   );
 }

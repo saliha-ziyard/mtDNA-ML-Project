@@ -1,0 +1,22 @@
+@import './variables.scss';
+.scroll-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background-color: #343456;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    &:hover {
+      background-color: #343456;
+    }
+  }
+  
