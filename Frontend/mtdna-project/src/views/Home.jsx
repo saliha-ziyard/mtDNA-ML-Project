@@ -24,7 +24,7 @@ function Home() {
           </h1>
           <hr />
           <h2>
-            Input your Mitochondrial DNA sequence to identify your ethnicity
+            Input your Mitochondrial DNA sequence to identify your ancestry
           </h2>
         </div>
       </div>
