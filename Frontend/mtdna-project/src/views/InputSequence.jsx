@@ -20,7 +20,7 @@ const InputSequence = () => {
 
       <HeaderComponent image={bannerImg} text={"mtDNA Prediction Tools"} />
       <div className="input-sequence">
-        <h2>Welcome to the mtDNA Ethnicity Prediction Tool</h2>
+        <h2>Welcome to the mtDNA Prediction Tool</h2>
         <p>
           Discover your ancestral origins using mitochondrial DNA (mtDNA)
           sequences. Our advanced machine learning model analyzes Hypervariable
