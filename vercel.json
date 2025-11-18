@@ -3,10 +3,7 @@
   "builds": [
     {
       "src": "Frontend/mtdna-project/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "Frontend/mtdna-project/dist"
-      }
+      "use": "@vercel/static-build"
     },
     {
       "src": "api/**/*.py",
@@ -14,13 +11,7 @@
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/Frontend/mtdna-project/dist/index.html"
-    }
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
