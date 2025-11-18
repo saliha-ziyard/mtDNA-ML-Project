@@ -19,9 +19,19 @@
       "dest": "/api/$1"
     },
     {
+      "src": "/assets/(.*)",
+      "dest": "/Frontend/mtdna-project/dist/assets/$1"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
+      "dest": "/Frontend/mtdna-project/dist/$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/Frontend/mtdna-project/$1"
+      "dest": "/Frontend/mtdna-project/dist/index.html"
     }
-  ],
-  "outputDirectory": "Frontend/mtdna-project/dist"
+  ]
 }
