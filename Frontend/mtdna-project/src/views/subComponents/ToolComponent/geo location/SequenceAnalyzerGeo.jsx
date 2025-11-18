@@ -6,7 +6,7 @@ import ErrorDisplay from '../ErrorDisplay';
 import ResultDisplay from '../ResultDisplay';
 
 const SequenceAnalyzerGeo = ({
-  modelEndpoint = "http://127.0.0.1:5000/predict_geo_location",
+  modelEndpoint = "/api/predict_geo_location",
   modelType = "hvr1_ethnicity",
   resultType = "Ethnicity",
   buttonText = "Predict",

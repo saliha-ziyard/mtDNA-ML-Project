@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dev": "concurrently \"python app.py\" \"cd Frontend/mtdna-project && npm run dev\"",
+    "build": "cd Frontend/mtdna-project && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.3",
+    "recharts": "^3.4.1"
+  }
+}
