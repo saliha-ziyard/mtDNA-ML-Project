@@ -5,11 +5,11 @@
       "src": "Frontend/mtdna-project/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "Frontend/mtdna-project/dist"
       }
     },
     {
-      "src": "api/*.py",
+      "src": "api/**/*.py",
       "use": "@vercel/python"
     }
   ],
@@ -17,17 +17,6 @@
     {
       "src": "/api/(.*)",
       "dest": "/api/$1"
-    },
-    {
-      "src": "/assets/(.*)",
-      "dest": "/Frontend/mtdna-project/dist/assets/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot))",
-      "dest": "/Frontend/mtdna-project/dist/$1"
-    },
-    {
-      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
