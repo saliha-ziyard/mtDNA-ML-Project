@@ -2,17 +2,32 @@
   "builds": [
     {
       "src": "Frontend/mtdna-project/package.json",
-      "use": "@vercel/static-build"
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
     },
     {
-      "src": "api/**/*.py",
+      "src": "api/predict_concatenated.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/predict_geo_location.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "src": "/api/predict_concatenated",
+      "dest": "/api/predict_concatenated.py"
+    },
+    {
+      "src": "/api/predict_geo_location",
+      "dest": "/api/predict_geo_location.py"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|svg|ico|json))",
+      "dest": "/$1"
     },
     {
       "src": "/(.*)",

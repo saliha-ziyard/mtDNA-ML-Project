@@ -1,11 +1,11 @@
 {
   "scripts": {
     "dev": "concurrently \"python app.py\" \"cd Frontend/mtdna-project && npm run dev\"",
-    "build": "cd Frontend/mtdna-project && npm run build"
+    "build": "cd Frontend/mtdna-project && npm run build",
+    "vercel-build": "cd Frontend/mtdna-project && npm install && npm run build"
   },
   "devDependencies": {
     "concurrently": "^8.0.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
