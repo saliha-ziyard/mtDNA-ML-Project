@@ -3,13 +3,15 @@ from flask_cors import CORS
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add parent directory to path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.ethnicity_predictor import EthnicityPredictor
 
 app = Flask(__name__)
 CORS(app)
 
+# Initialize predictor once
 ethnicity_predictor = None
 
 def get_predictor():
@@ -19,6 +21,7 @@ def get_predictor():
     return ethnicity_predictor
 
 @app.route('/', methods=['POST'])
+@app.route('/api/predict_concatenated', methods=['POST'])
 def predict_ethnicity():
     data = request.get_json(force=True)
 
@@ -33,13 +36,19 @@ def predict_ethnicity():
         predictor = get_predictor()
         prediction = predictor.predict(combined_sequence)[0]
         probabilities = predictor.predict_proba(combined_sequence)[0]
+        
+        # Handle different probability formats
+        if hasattr(probabilities, 'tolist'):
+            probs_list = probabilities.tolist()
+        else:
+            probs_list = list(probabilities)
+            
         return jsonify({
             'prediction': prediction, 
-            'probabilities': probabilities.tolist()
+            'probabilities': probs_list
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Vercel serverless handler
-def handler(environ, start_response):
-    return app(environ, start_response)
+# Vercel handler
+handler = app

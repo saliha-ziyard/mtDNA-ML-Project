@@ -9,15 +9,7 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:5000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      },
-      '/predict_concatenated': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-      },
-      '/predict_geo_location': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')  // ✅ This removes /api prefix
       }
     }
   },

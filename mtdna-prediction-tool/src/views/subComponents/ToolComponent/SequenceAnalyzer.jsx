@@ -6,7 +6,7 @@ import ErrorDisplay from './ErrorDisplay';
 import ResultDisplay from './ResultDisplay';
 
 const SequenceAnalyzer = ({ 
-  modelEndpoint = "http://127.0.0.1:5000/predict_concatenated",
+  modelEndpoint = "/api/predict_concatenated",  // ✅ FIXED: Changed from localhost URL
   modelType = "combined_ethnicity",
   resultType = "Ethnicity",
   buttonText = "Predict",
