@@ -16,7 +16,7 @@ const EthnicityTool = () => {
       <h2 className="tool-description">Upload or enter your combined (HVR1 & HVR2) sequence for ethnicity prediction</h2>
       
       <SequenceAnalyzer 
-        modelEndpoint="/api/predict_concatenated"
+        modelEndpoint="/predict_concatenated"
         modelType="combined_ethnicity"
         resultType="Ethnicity"
         buttonText="Predict Ethnicity"

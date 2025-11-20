@@ -3,7 +3,6 @@ from flask_cors import CORS
 import sys
 import os
 
-# Add parent directory to path to import utils
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils.geo_predictor import GeoLocationPredictor
@@ -11,7 +10,6 @@ from utils.geo_predictor import GeoLocationPredictor
 app = Flask(__name__)
 CORS(app)
 
-# Initialize predictor (will be cached)
 geo_predictor = None
 
 def get_predictor():
@@ -20,7 +18,7 @@ def get_predictor():
         geo_predictor = GeoLocationPredictor()
     return geo_predictor
 
-@app.route('/api/predict_geo_location', methods=['POST'])
+@app.route('/', methods=['POST'])
 def predict_geo_location():
     data = request.get_json(force=True)
     if 'hvr1_sequence' not in data:
@@ -32,11 +30,13 @@ def predict_geo_location():
         predictor = get_predictor()
         prediction = predictor.predict(sequence)[0]
         probabilities = predictor.predict_proba(sequence)[0]
-        return jsonify({'prediction': prediction, 'probabilities': probabilities})
+        return jsonify({
+            'prediction': prediction, 
+            'probabilities': probabilities.tolist()
+        })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# For Vercel serverless
-def handler(request):
-    with app.request_context(request.environ):
-        return app.full_dispatch_request()
+# Vercel serverless handler
+def handler(environ, start_response):
+    return app(environ, start_response)

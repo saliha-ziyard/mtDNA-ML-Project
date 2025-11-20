@@ -17,7 +17,7 @@ const Geolocation = () => {
       <h2 className="tool-description">Upload or enter your HVR1 sequence for geo location prediction</h2>
       
       <SequenceAnalyzerGeo 
-        modelEndpoint="/api/predict_geo_location"
+        modelEndpoint="/predict_geo_location"
         modelType="hvr1_ethnicity"
         resultType="Geo Location"
         buttonText="Predict Geo Location"

@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from utils.geo_predictor import GeoLocationPredictor
 from utils.ethnicity_predictor import EthnicityPredictor
+import numpy as np
 
 app = Flask(__name__)
 CORS(app)
@@ -9,7 +10,7 @@ CORS(app)
 geo_predictor = GeoLocationPredictor()
 ethnicity_predictor = EthnicityPredictor()
 
-@app.route('/api/predict_geo_location', methods=['POST'])
+@app.route('/predict_geo_location', methods=['POST'])
 def predict_geo_location():
     data = request.get_json(force=True)
     if 'hvr1_sequence' not in data:
@@ -20,11 +21,23 @@ def predict_geo_location():
     try:
         prediction = geo_predictor.predict(sequence)[0]
         probabilities = geo_predictor.predict_proba(sequence)[0]
-        return jsonify({'prediction': prediction, 'probabilities': probabilities})
+        
+        # Handle if probabilities is a dict
+        if isinstance(probabilities, dict):
+            probs_list = probabilities
+        elif isinstance(probabilities, np.ndarray):
+            probs_list = probabilities.tolist()
+        else:
+            probs_list = list(probabilities)
+            
+        return jsonify({
+            'prediction': prediction, 
+            'probabilities': probs_list
+        })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/predict_concatenated', methods=['POST'])
+@app.route('/predict_concatenated', methods=['POST'])
 def predict_ethnicity():
     data = request.get_json(force=True)
 
@@ -38,8 +51,21 @@ def predict_ethnicity():
     try:
         prediction = ethnicity_predictor.predict(combined_sequence)[0]
         probabilities = ethnicity_predictor.predict_proba(combined_sequence)[0]
-        return jsonify({'prediction': prediction, 'probabilities': probabilities})
+        
+        # Handle if probabilities is a dict
+        if isinstance(probabilities, dict):
+            probs_list = probabilities
+        elif isinstance(probabilities, np.ndarray):
+            probs_list = probabilities.tolist()
+        else:
+            probs_list = list(probabilities)
+            
+        return jsonify({
+            'prediction': prediction, 
+            'probabilities': probs_list
+        })
     except Exception as e:
+        print(f"Error in predict_ethnicity: {str(e)}")  # Debug logging
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':

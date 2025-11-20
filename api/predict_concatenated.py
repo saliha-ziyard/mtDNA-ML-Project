@@ -18,7 +18,7 @@ def get_predictor():
         ethnicity_predictor = EthnicityPredictor()
     return ethnicity_predictor
 
-@app.route('/api/predict_concatenated', methods=['POST'])
+@app.route('/', methods=['POST'])
 def predict_ethnicity():
     data = request.get_json(force=True)
 
@@ -33,10 +33,13 @@ def predict_ethnicity():
         predictor = get_predictor()
         prediction = predictor.predict(combined_sequence)[0]
         probabilities = predictor.predict_proba(combined_sequence)[0]
-        return jsonify({'prediction': prediction, 'probabilities': probabilities})
+        return jsonify({
+            'prediction': prediction, 
+            'probabilities': probabilities.tolist()
+        })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-def handler(request):
-    with app.request_context(request.environ):
-        return app.full_dispatch_request()
+# Vercel serverless handler
+def handler(environ, start_response):
+    return app(environ, start_response)
